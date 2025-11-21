@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ThreatLens - Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<div class="layout-wrapper">
+    <div class="sidebar">
+        <div class="brand">
+            <i class="fas fa-cube fa-spin me-2" style="color: var(--neon-purple)"></i>
+            THREAT<span style="color: var(--neon-cyan)">LENS</span>
+        </div>
+        <nav style="flex-grow: 1; margin-top: 20px;">
+            <a href="/dashboard" class="nav-link">
+                <i class="fas fa-globe-americas"></i> <span>Live Map</span>
+            </a>
+            <a href="/intel" class="nav-link">
+                <i class="fas fa-microchip"></i> <span>Intel Feed</span>
+            </a>
+            <a href="/reports" class="nav-link active">
+                <i class="fas fa-meteor"></i> <span>Reports</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h2 class="fw-bold mb-5">Diffusion & Alerts</h2>
+
+        <div class="row g-4">
+            <!-- REPORT CARD -->
+            <div class="col-md-6">
+                <div class="cyber-card h-100 text-center d-flex flex-column justify-content-center">
+                    <div class="mb-4">
+                        <i class="fas fa-file-pdf fa-5x" style="color: var(--neon-purple); filter: drop-shadow(0 0 10px var(--neon-purple));"></i>
+                    </div>
+                    <h3 class="fw-bold text-white">Executive Briefing</h3>
+                    <!-- UPDATED TEXT -->
+                    <p class="text-muted mb-4 px-5">Generate a full AI-summarized PDF report of all detected threats and indicators of compromise.</p>
+                    
+                    <!-- HIDDEN CONTENT FOR PDF GENERATION -->
+                    <div id="pdf-template" style="display: none;">
+                        <div style="padding: 40px; font-family: Arial, sans-serif; color: #333; background: #fff;">
+                            <div style="border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px;">
+                                <h1 style="color: #d946ef; margin: 0;">THREATLENS</h1>
+                                <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">SECURITY OPERATIONS CENTER // FULL EXECUTIVE BRIEF</p>
+                            </div>
+                            
+                            <table style="width: 100%; margin-bottom: 30px;">
+                                <tr>
+                                    <td><strong>Date:</strong> <span id="pdf-date"></span></td>
+                                    <td style="text-align: right;"><strong>User:</strong> CHALABI-CERINE</td>
+                                </tr>
+                            </table>
+
+                            <div style="background: #f8f9fa; padding: 20px; border-left: 5px solid #ff2e63; margin-bottom: 30px;">
+                                <h3 style="margin-top: 0; color: #ff2e63;">EXECUTIVE SUMMARY</h3>
+                                <p style="line-height: 1.6;">The ThreatLens AI system has compiled a complete historical analysis of all detected vectors. Cumulative data indicates persistent threats in the <strong>Finance</strong> and <strong>Healthcare</strong> sectors.</p>
+                            </div>
+
+                            <!-- UPDATED SECTION TITLE -->
+                            <h3>CRITICAL INCIDENT HISTORY (All Time)</h3>
+                            <ul style="line-height: 1.8;">
+                                <li><strong>[CRITICAL]</strong> Zero-Day RCE Vulnerability detected in Apache Log4j variants.</li>
+                                <li><strong>[HIGH]</strong> "DarkSide" Ransomware activity spike observed in EU region.</li>
+                                <li><strong>[HIGH]</strong> Phishing campaign targeting cloud credentials via fake MFA portals.</li>
+                                <li><strong>[MEDIUM]</strong> Botnet traffic anomaly detected from IP Block 192.168.x.x.</li>
+                                <li><strong>[HIGH]</strong> Data exfiltration attempt blocked on port 443.</li>
+                                <li><strong>[CRITICAL]</strong> SQL Injection attempt on legacy auth server.</li>
+                            </ul>
+
+                            <div style="margin-top: 50px; font-size: 12px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+                                Generated automatically by ThreatLens AI Engine.<br>
+                                Confidential - Internal Use Only.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="downloadBtn" class="btn-cyber w-50 mx-auto" onclick="generatePDF()">
+                        <i class="fas fa-download me-2"></i> DOWNLOAD PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- ALERTS CARD -->
+            <div class="col-md-6">
+                <div class="cyber-card h-100">
+                    <h4 class="mb-4" style="color: var(--neon-red)"><i class="fas fa-bell me-2"></i> Alert Protocols</h4>
+                    
+                    <div class="d-flex align-items-center justify-content-between mb-4 p-3" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                        <div>
+                            <div class="fw-bold text-white">Critical Severity Email</div>
+                            <div class="small text-muted">Instant notification for Score > 90</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked style="cursor: pointer; filter: hue-rotate(120deg);">
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between mb-4 p-3" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                        <div>
+                            <div class="fw-bold text-white">SMS / Mobile Push</div>
+                            <div class="small text-muted">For Zero-Day exploits only</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked style="cursor: pointer; filter: hue-rotate(120deg);">
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between p-3" style="background: rgba(255,255,255,0.05); border-radius: 12px;">
+                        <div>
+                            <div class="fw-bold text-white">Weekly Digest</div>
+                            <div class="small text-muted">Every Monday at 09:00 UTC</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" style="cursor: pointer; filter: hue-rotate(120deg);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    function generatePDF() {
+        const btn = document.getElementById('downloadBtn');
+        const originalText = btn.innerHTML;
+        
+        // 1. Update Button State
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> GENERATING...';
+        btn.disabled = true;
+
+        // 2. Prepare Data
+        document.getElementById('pdf-date').innerText = new Date().toISOString().split('T')[0];
+        
+        // 3. Create the element to print
+        const template = document.getElementById('pdf-template');
+        
+        // Create a container specifically for printing
+        const printContainer = document.createElement('div');
+        printContainer.id = 'print-container';
+        
+        // Copy content
+        printContainer.innerHTML = template.innerHTML;
+        
+        // STYLE IT EXPLICITLY FOR A4 PAPER
+        // We force a white box on top of everything
+        Object.assign(printContainer.style, {
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '800px',     // Fixed width (approx A4)
+            minHeight: '1100px', // Fixed height (approx A4)
+            padding: '40px',
+            backgroundColor: '#ffffff',
+            color: '#000000',
+            zIndex: '10000',
+            display: 'block',
+            fontFamily: 'Arial, sans-serif'
+        });
+
+        document.body.appendChild(printContainer);
+
+        // 4. PDF Configuration
+        var opt = {
+            margin:       0.5,
+            filename:     'ThreatLens_Briefing_' + new Date().toISOString().slice(0,10) + '.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: true, 
+                scrollY: 0,
+                // We explicitly tell html2canvas to capture our specific container
+                windowWidth: 850,
+                height: 1200
+            },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        // 5. Generate
+        // Wait 1 second to ensure DOM is fully painted
+        setTimeout(() => {
+            html2pdf().set(opt).from(printContainer).save().then(function() {
+                // Cleanup
+                document.body.removeChild(printContainer);
+                btn.innerHTML = '<i class="fas fa-check me-2"></i> DOWNLOADED';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 3000);
+            }).catch(function(err) {
+                console.error(err);
+                if(document.body.contains(printContainer)) document.body.removeChild(printContainer);
+                btn.innerHTML = 'ERROR';
+                alert("PDF Generation failed. Check console.");
+            });
+        }, 1000); // Increased timeout to 1s to guarantee render
+    }
+</script>
+</body>
+</html>

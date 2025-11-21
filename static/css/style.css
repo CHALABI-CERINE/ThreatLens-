@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    /* --- BACKGROUNDS --- */
+    --bg-deep: #0f111a;       /* Dark Navy */
+    --bg-card: rgba(25, 27, 50, 0.95); /* Nearly opaque dark blue for readability */
+    
+    /* --- TEXT COLORS (HIGH CONTRAST) --- */
+    --text-main: #ffffff;     /* Pure White */
+    --text-muted: #e2e8f0;    /* Bright Silver (Was dark grey before) */
+    --text-label: #94a3b8;    /* Light Grey for small labels */
+
+    /* --- NEON ACCENTS --- */
+    --neon-cyan: #00f2ff;
+    --neon-purple: #d946ef;
+    --neon-red: #ff2e63;
+    --neon-green: #2ed573;
+    
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    background-color: var(--bg-deep);
+    background-image: 
+        radial-gradient(circle at 10% 10%, rgba(120, 50, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(0, 242, 255, 0.15) 0%, transparent 40%);
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* --- GLOBAL TEXT OVERRIDES --- */
+h1, h2, h3, h4, h5, h6 { color: #ffffff !important; }
+.text-muted { color: var(--text-muted) !important; }
+.small { color: var(--text-label) !important; }
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 260px;
+    height: 95vh;
+    position: fixed;
+    left: 20px;
+    top: 2.5vh;
+    background: rgba(15, 17, 35, 0.9);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 40px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.nav-link {
+    color: var(--text-muted);
+    padding: 16px;
+    margin-bottom: 8px;
+    border-radius: 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    transform: translateX(5px);
+}
+
+.nav-link.active {
+    background: linear-gradient(90deg, rgba(0, 242, 255, 0.2), transparent);
+    color: var(--neon-cyan);
+    border-left: 4px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+}
+
+.nav-link i { width: 30px; font-size: 1.2em; }
+
+/* --- MAIN CONTENT --- */
+.main-content {
+    margin-left: 300px;
+    padding: 40px;
+    width: calc(100% - 300px);
+}
+
+/* --- CARDS (FIXED VISIBILITY) --- */
+.cyber-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+.cyber-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* Ensure card titles are always bright white */
+.cyber-card h5, .card-title {
+    color: #ffffff !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Fixed Label Colors inside Cards */
+.text-uppercase.small.fw-bold {
+    color: #94a3b8 !important; /* Light Grey instead of Dark Grey */
+    letter-spacing: 1px;
+}
+
+/* --- STATS --- */
+.stat-val {
+    font-size: 48px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* --- BUTTONS --- */
+.btn-cyber {
+    background: var(--neon-cyan);
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
+
+.btn-cyber:hover {
+    background: #fff;
+    box-shadow: 0 0 25px rgba(255,255,255,0.6);
+    transform: scale(1.05);
+}
+
+/* --- TABLES --- */
+.table { color: var(--text-muted); }
+.table th {
+    color: #fff;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.table td {
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    color: var(--text-muted) !important;
+    vertical-align: middle;
+}
+.table tr:hover td {
+    background: rgba(255,255,255,0.05);
+    color: #fff !important;
+}
+
+/* --- FORM INPUTS --- */
+.form-control, .form-select {
+    background: rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    color: #fff !important;
+    border-radius: 12px;
+}
+.form-control:focus {
+    background: rgba(255,255,255,0.15) !important;
+    border-color: var(--neon-cyan) !important;
+    box-shadow: 0 0 0 3px rgba(0, 242, 255, 0.2);
+}
